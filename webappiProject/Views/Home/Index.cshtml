@@ -1,0 +1,154 @@
+﻿
+@{
+    ViewBag.Title = "About";
+
+    Layout = null;
+}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<style>
+
+    body {
+        font-family: Helvetica Neue, Helvetica, sans-serif, Arial;
+        font-weight: 100;
+        font-size: 16px;
+    }
+
+    select {
+        font-size: inherit;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        font-family: Helvetica Neue, Helvetica, sans-serif, Arial;
+        font-weight: 200;
+    }
+
+    h2 {
+        margin-bottom: .5em;
+    }
+
+
+</style>
+
+
+<!DOCTYPE html>
+<html>
+<head>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="http://cdn.rawgit.com/davidstutz/bootstrap-multiselect/master/dist/css/bootstrap-multiselect.css" rel="stylesheet" type="text/css" />
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+    <script src="http://cdn.rawgit.com/davidstutz/bootstrap-multiselect/master/dist/js/bootstrap-multiselect.js" type="text/javascript"></script>
+
+</head>
+<body>
+
+    <h2> yyyyy</h2>
+
+    <div class="row">
+
+        <div class="col-lg-4 col-lg-offset-4 ml-5">
+            @Html.DropDownList("StudentGender", (IEnumerable<SelectListItem>)ViewBag.listttt, new { @class = "form-control", @multiple = "multiple" ,id="ggg" })
+
+        </div>
+       
+        <button id="ckii"> clear</button>
+        <button id="ckii2"> clear22</button>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+
+             iii = '@ViewBag.listttt';
+
+        });
+        $("#ggg").multiselect({});
+        $("#ckii").click(function () {
+
+           $("#ggg option").remove();
+            $('#ggg').multiselect('rebuild');
+            $("#ggg").multiselect('refresh');
+
+            alert("ok")
+
+        })
+        $("#ckii2").click(function () {
+            debugger
+
+            //Text = "Male", Value = "1"
+            //$('#ggg').trigger('change').val(['2', '3']);
+           
+           // $('#ggg').text("Malee");
+
+            $("#ggg").append($('<option>', { value: "4", text: "New Option Text" }));
+
+             //$('#ggg').append(Text = "Malee", Value = "4");
+
+
+
+            $('#ggg').multiselect('rebuild');
+            $("#ggg").multiselect('refresh');
+            alert("ok")
+
+        })
+
+        $(function () {
+            $('#ggg').multiselect({
+                includeSelectAllOption: true,
+                enableCaseInsensitiveFiltering: true,
+                numberDisplayed: 1,
+                maxHeight: 250,
+                includeSelectAllOption: false,
+                onChange: function (option, checked, select) {
+                    debugger
+                    if (checked == true) {
+                        var last_valid_selection = null;
+                        if ($('#template option:selected').length > 3) {
+                            alert('sorry');
+                            var $element = $(this);
+                            $($element).prop('checked', false);
+                        }
+                    }
+                }
+            });
+        });
+
+
+
+    </script>
+</body>
+</html>
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

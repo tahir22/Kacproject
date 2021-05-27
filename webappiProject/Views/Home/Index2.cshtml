@@ -1,0 +1,65 @@
+﻿
+@{
+    ViewBag.Title = "Index2";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index2</h2>
+
+<input type="text" id="message2" />
+<button type="button" id="sendbutton" onclick="sendMessage();">Send my message to the server</button>
+<br />
+
+<div id="messages" class="h4 text-danger">
+
+
+</div>
+
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+<script>
+    debugger
+
+    $(document).ready(function () {
+        debugger
+
+        var uri = "ws://localhost:50692/api/SocketClient";
+
+        //Initialize socket
+        websocket = new WebSocket(uri);
+
+        //Open socket and send message
+        websocket.onopen = function () {
+            debugger
+            $('#messages').prepend('<div>Connected to server.</div>');
+            //websocket.send("Hello!");
+        };
+
+        //Socket error handler
+        websocket.onerror = function (event) {
+            debugger
+            $('#messages').prepend('<div>Ooooops! Some error occured</div>');
+        };
+
+        //Socket message handler
+        websocket.onmessage = function (event) {
+            debugger
+            $('#messages').prepend('<div>' + event.data + '</div>');
+        };
+    });
+    function sendMessage() {
+        debugger
+      
+            //get the message text input element
+            var message = document.getElementById("message2").value;
+
+            if (message !== "") {
+                //socket.send(message);
+                websocket.send(message);
+               // infodiv.innerHTML += "<p>Sent message to server: '" + message + "'</p>";
+            } else {
+                alert("You must enter a message to be sent!");
+            }
+         
+    }
+
+</script>

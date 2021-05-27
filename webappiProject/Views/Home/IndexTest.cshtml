@@ -1,0 +1,147 @@
+﻿
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.16/css/bootstrap-multiselect.css" rel="stylesheet" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.16/css/bootstrap-multiselect.min.css" rel="stylesheet" />
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.16/js/bootstrap-multiselect.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.16/js/bootstrap-multiselect.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.20/lodash.min.js"></script>
+
+
+<div class="row">
+    <div class="col-md-3 col-lg-2 ">
+        <div id="drpcnt" class="dropdown-container hh">
+            <div class="dropdown-button noselect" id="mydiv">
+                <div id="drplbl" class="dropdown-label">Customer</div>
+                <div id="drpqty" class="dropdown-quantity">(<span class="quantity">Any</span>)</div>
+                <i class="fa fa-caret-down jjj"></i>
+            </div>
+            <div id="brand" class="dropdown-list my" style="display: block;">
+                <input id="drpsrc" type="search" placeholder="Search Customer" class="dropdown-search">
+                <ul id="drpuli" class="uli"><li><input id="mychk" name="0" type="checkbox"><label for="0">All</label></li></ul>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    var ListItems = {};
+    $.ajax({
+        url: '/Home/GetEmployee',
+        contentType: 'application/json ; charset:utf-8',
+        type: "GET",
+        dataType: 'json',
+        async: false,
+        success: function (data) {
+            debugger
+
+            for (var i = 0; i < data.length; i++) {
+
+                ListItems[i] = { name: data[i].Text, ID: data[i].Value };
+            }
+
+            my();
+        },
+        error: function (msg, xhr) {
+            alert("error")
+            console.log(msg);
+            console.log(xhr);
+        }
+
+    })
+    function my() {
+        var stateTemplate = _.template(
+            '<li>' +
+            '<input id="mychk" name="<%= ID %>" type="checkbox">' +
+            '<label for="<%= ID %>"><%= capName %></label>' +
+            '</li>'
+        );
+        debugger
+
+        _.each(ListItems, function (s) {
+            
+
+            s.capName = _.startCase(s.name.toLowerCase());
+            $('.uli').append(stateTemplate(s));
+        });
+
+    }
+</script>
+<style>
+    .noselect {
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+    .dropdown-container, .instructions {
+        width: 300px;
+        font-size: 14px;
+        font-family: sans-serif;
+        overflow: auto;
+        color: white;
+    }
+
+    .instructions {
+        width: 100%;
+        text-align: center;
+    }
+
+    .dropdown-button {
+        float: left;
+        width: 100%;
+        background: Gray;
+        padding: 10px 12px;
+        cursor: pointer;
+        border: 1px solid lightgray;
+        box-sizing: border-box;
+    }
+
+    .dropdown-label, .dropdown-quantity {
+        float: left;
+    }
+
+    .dropdown-quantity {
+        margin-left: 2px;
+    }
+
+    .jjj {
+        float: right;
+    }
+
+
+    .dropdown-list {
+        float: left;
+        width: 100%;
+        border: 1px solid lightgray;
+        border-top: none;
+        box-sizing: border-box;
+        padding: 10px 12px;
+    }
+
+    input[type="search"] {
+        padding: 5px 0;
+        width: 100%;
+        color: black;
+    }
+
+    .uli {
+        width: 100%;
+        max-height: 200px;
+        overflow-y: auto;
+        padding-left: 0;
+    }
+
+    input[type="checkbox"] {
+        position: relative;
+        top: 1px;
+        margin-right: 5px;
+    }
+</style>
+

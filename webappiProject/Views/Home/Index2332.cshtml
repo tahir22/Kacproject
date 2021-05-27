@@ -1,0 +1,65 @@
+﻿@*<body>
+        <h2>Simple Event Sample</h2>
+        <input type="button" id="connect" value="Connect" class="btn" />
+        <p id="Status"></p>
+        <ul id="messages" />
+    </body>*@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <!--<meta http-equiv="X-UA-Compatible" content="IE=edge" />-->
+    <title>Simple WebSocket Eventing with ASP.NET and WCF 4.5</title>
+    <link rel="stylesheet" type="text/css" href="Styles/style.css" />
+    <script src="Scripts/jquery-1.7.1.min.js"></script>
+    <script src="Scripts/jquery.cookie.js" type="text/javascript"></script>
+    <script src="Scripts/json2.min.js" type="text/javascript"></script>
+    <script src="Scripts/modernizr-2.0.6-development-only.js" type="text/javascript"></script>
+    <script src="Scripts/script.js" type="text/javascript"></script>
+</head>
+<body>
+    <h2>Simple Event Sample</h2>
+    <input type="button" id="connect" value="Connect" class="btn" />
+    <p id="Status"></p>
+    <ul id="messages" />
+</body>
+</html>
+
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+<script>
+
+
+
+        $(function () {
+            "use strict";
+
+            if (Modernizr.websockets) {
+                $("#Status").append("WebSockets is supported. Click the Connect button.");
+            }
+
+            if (!window.WebSocket && window.MozWebSocket) {
+                window.WebSocket = window.MozWebSocket;
+            }
+
+            $('#connect').click(function () {
+                debugger
+                var count;
+                var connection;
+
+                var host = "ws://localhost:50692/api/testingnew";
+                //var host = "ws://localhost/SimpleEventingService/SimpleEventingService.svc";
+
+                connection = new WebSocket(host);
+
+                connection.onopen = function () {
+                    $(".btn").css("color", "green");
+                }
+
+                connection.onmessage = function (message) {
+                    var data = window.JSON.parse(message.data);
+                    $("<li/>").html(data).appendTo($('#messages'));
+                };
+            });
+        });
+    </script>

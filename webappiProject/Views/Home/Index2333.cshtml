@@ -1,0 +1,151 @@
+﻿
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<!DOCTYPE html>
+<meta charset="utf-8" />
+<title>WebSocket Test</title>
+
+
+
+
+
+
+
+
+
+<br />
+
+<style>
+    textarea {
+        vertical-align: bottom;
+    }
+
+    #output {
+        overflow: auto;
+    }
+
+        #output > p {
+            overflow-wrap: break-word;
+        }
+
+        #output span {
+            color: blue;
+        }
+
+            #output span.error {
+                color: red;
+            }
+</style>
+<h2>WebSocket Test</h2>
+ 
+<input type="text" id="message2" />
+<button type="button" onclick="sendMessage();" >send</button>
+<div id=output></div>
+
+
+
+
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+<script language="javascript" type="text/javascript">
+    debugger
+    //wsUri = "ws://localhost:44326/api/User";
+
+    wsUri = "ws://localhost:8088";
+
+
+    var output;
+
+    function init() {
+        debugger
+        output = document.getElementById("output");
+        testWebSocket();
+    }
+
+    function testWebSocket() {
+        debugger
+        //websocket = new WebSocket(wsUri);
+        websocket = new WebSocket(wsUri);
+        websocket.onopen = function (evt) { onOpen(evt) };
+        websocket.onclose = function (evt) { onClose(evt) };
+        websocket.onmessage = function (evt) { onMessage(evt) };
+        websocket.onerror = function (evt) { onError(evt) };
+    }
+
+    function onOpen(evt) {
+        debugger
+        writeToScreen("CONNECTED");
+        doSend("WebSocket rocks");
+    }
+
+    function onClose(evt) {
+        debugger
+        writeToScreen("DISCONNECTED");
+    }
+
+    function onMessage(evt) {
+        debugger
+        writeToScreen('<span style="color: blue;">RESPONSE: ' + evt.data + '</span>');
+        websocket.close();
+    }
+
+    function onError(evt) {
+        debugger
+        writeToScreen('<span style="color: red;">ERROR:</span> ' + evt.data);
+    }
+
+    function doSend(message) {
+        debugger
+        writeToScreen("SENT: " + message);
+        websocket.send(message);
+    }
+
+    function writeToScreen(message) {
+        debugger
+        var pre = document.createElement("p");
+        pre.style.wordWrap = "break-word";
+        pre.innerHTML = message;
+        output.appendChild(pre);
+    }
+
+    //function onClickButton() {
+    //    debugger
+    //    var text = textarea.value;
+
+    //    text && onmessage(text);
+    //    textarea.value = "";
+    //    textarea.focus();
+    //}
+    function sendMessage() {
+        debugger
+
+        //var text = textarea.value;
+
+        //text && doSend(text);
+        //textarea.value = "";
+
+        var message = document.getElementById("message2").value;
+
+        if (message !== "") {
+            //socket.send(message);
+            doSend(message);
+            // infodiv.innerHTML += "<p>Sent message to server: '" + message + "'</p>";
+        } else {
+            alert("You must enter a message to be sent!");
+        }
+
+        //textarea.focus();
+
+    }
+
+    window.addEventListener("load", init, false);
+   
+</script>
+
+ 
+

@@ -1,0 +1,28 @@
+﻿
+@{
+    ViewBag.Title = "Index22";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index22</h2>
+
+<input type="file" />
+<div id="result"></div>
+
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+<script>
+
+
+
+    document.querySelector('input').addEventListener('change', function () {
+        debugger
+    var reader = new FileReader();
+    reader.onload = function(){
+        var arrayBuffer = this.result;
+      console.log(arrayBuffer);
+        document.querySelector('#result').innerHTML = arrayBuffer + '  '+arrayBuffer.byteLength;
+        }
+    reader.readAsArrayBuffer(this.files[0]);
+  }, false);
+ 
+</script>
